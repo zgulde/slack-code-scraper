@@ -1,0 +1,21 @@
+{
+  "name": "slack-bot",
+  "version": "1.0.0",
+  "description": "slack bot for codeup",
+  "main": "app.js",
+  "scripts": {
+    "test": "APP_ENV=testing jest --verbose",
+    "start": "APP_ENV=production node app.js",
+    "lint": "eslint *.js src/*.js test/*.js; true"
+  },
+  "author": "Zach Gulde",
+  "license": "ISC",
+  "dependencies": {
+    "mysql": "^2.13.0",
+    "slackbots": "^1.0.2"
+  },
+  "devDependencies": {
+    "eslint": "^3.15.0",
+    "jest": "^18.1.0"
+  }
+}
