@@ -7,5 +7,19 @@ module.exports = {
     'U0MKKNF0T': 'montealegreluis',
     'U037MJFLX': 'ryanorsinger',
     'U1UH3NFJ8': 'zach',
+  },
+  database: {
+    testing: {
+      host: '',
+      user: '',
+      password: '',
+      database: '',
+    },
+    production: {
+      host: '',
+      user: '',
+      password: '',
+      database: '',
+    }
   }
 };
