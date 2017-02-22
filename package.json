@@ -2,6 +2,7 @@
   "name": "slack-bot",
   "version": "1.0.0",
   "description": "slack bot for codeup",
+  "repository": "https://github.com/zgulde/slack-code-scraper",
   "main": "app.js",
   "scripts": {
     "test": "APP_ENV=testing jest --verbose",
@@ -12,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "mysql": "^2.13.0",
+    "request": "^2.79.0",
     "slackbots": "^1.0.2"
   },
   "devDependencies": {
