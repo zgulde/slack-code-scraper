@@ -1,5 +1,7 @@
 const eventsToListenFor = ['message', 'file_upload'];
-const { instructors } = require('./.env.js');
+const { instructors } = require('./.env');
+const { insert } = require('./persistance');
+const { getFile } = require('./fileUtils');
 
 const instructorIds = Object.keys(instructors);
 
@@ -27,21 +29,34 @@ const containsCode = event => {
     isSnippet(event);
 };
 
-// const saveSnippet = event => {
-//   // get the file contents
-//   persist(fileContents, instrutors[event.user]);
-// };
+const stripBackticks = s => s.replace(/^```|```$/g, '').trim();
 
-// const savePlaintext = event => {
-//   persist(event.text, instructors[event.user]);
-// };
+const saveSnippet = (event, cb) => {
+  const author = instructors[event.user];
+  const downloadUrl = event.file.url_private_download;
+  const title = event.file.title;
 
-// const save = event => {
-//   isSnippet(event) ? saveSnippet(event) : savePlaintext(event);
-// };
+  getFile(downloadUrl).then(fileText => {
+    insert(fileText, author, title, cb);
+  }).catch(err => {
+    throw err;
+  });
+};
+
+const savePlaintext = (event, cb) => {
+  insert(stripBackticks(event.text), instructors[event.user], null, cb);
+};
+
+const save = (event, cb) => {
+  isSnippet(event) ? saveSnippet(event, cb) : savePlaintext(event, cb);
+};
 
 module.exports = {
   containsCode,
   isSnippet,
-  shouldIgnoreEvent
+  shouldIgnoreEvent,
+  savePlaintext,
+  stripBackticks,
+  saveSnippet,
+  save,
 };

@@ -1,6 +1,6 @@
 /*globals describe test expect*/
 
-const { shouldIgnoreEvent, containsCode, isSnippet } = require('../eventUtils');
+const { shouldIgnoreEvent, containsCode, isSnippet, stripBackticks } = require('../eventUtils');
 
 describe('shouldIgnoreEvent', () => {
   test('ignores an event without a type or user property.', () => {
@@ -102,5 +102,12 @@ describe('isSnippet', () => {
       text: '```\nhere is some code\n```'
     };
     expect(isSnippet(event)).toBeFalsy();
+  });
+});
+
+describe('stripBackticks', () => {
+  test('removes backticks and newlines from the start and end of a string', () => {
+    const s = '```\ncode\n```';
+    expect(stripBackticks(s)).toBe('code');
   });
 });
