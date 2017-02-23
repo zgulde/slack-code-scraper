@@ -17,7 +17,7 @@ afterAll(() => {
 
 const isNumeric = possibleNumber => ! isNaN(possibleNumber);
 
-describe('database integration', () => {
+describe('basic database interaction', () => {
   
   test('connects to database successfully', done => {
     dbc.query('select 1 + 1 as solution', (err, results, fields) => {
@@ -28,14 +28,14 @@ describe('database integration', () => {
   });
 
   test('inserts a record and returns its id', done => {
-    insert('a code sample', 'someauthor', id => {
+    insert('a code sample', 'someauthor', 'some title',  id => {
       expect(isNumeric(id)).toBe(true);
       done();
     })
   });
 
-  test('inserted record can be found', done => {
-    insert('some code sample', 'someauthor', id => {
+  test('inserted record can be found by its id', done => {
+    insert('some code sample', 'someauthor', 'some title', id => {
       dbc.query('select * from code_samples where id = ?', [id], (err, results, fields) => {
         let { code, author } = results[0];
         expect(code).toBe('some code sample');
