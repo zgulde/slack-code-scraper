@@ -7,7 +7,7 @@
   "scripts": {
     "test": "APP_ENV=testing jest --verbose",
     "start": "APP_ENV=production node app.js",
-    "lint": "eslint *.js src/*.js test/*.js; true"
+    "lint": "eslint src/"
   },
   "author": "Zach Gulde",
   "license": "ISC",
