@@ -5,7 +5,9 @@ const instructorNames = [
   'fernando',
   'montealegreluis',
   'ryanorsinger',
-  'jreich5'
+  'jreich5',
+  'liz.peacock',
+  'benroberts'
 ];
 
 bot.on('start', () => {
