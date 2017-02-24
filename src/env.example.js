@@ -1,5 +1,7 @@
 module.exports = {
   token: 'put the slack token here',
+  readFilesToken: 'a slack token that has "read" or "files:read" scope',
+
   // map slack ids to usernames
   instructors: {
     'U1QMCDLVC': 'fernando',
@@ -8,6 +10,7 @@ module.exports = {
     'U037MJFLX': 'ryanorsinger',
     'U1UH3NFJ8': 'zach',
   },
+
   database: {
     testing: {
       host: '',
