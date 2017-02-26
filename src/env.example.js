@@ -1,5 +1,5 @@
 module.exports = {
-  token: 'put the slack token here',
+  token: 'put the slack bot user token here',
   readFilesToken: 'a slack token that has "read" or "files:read" scope',
 
   // map slack ids to usernames
