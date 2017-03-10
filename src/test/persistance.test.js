@@ -20,7 +20,6 @@ afterAll(() => {
 const isNumeric = possibleNumber => ! isNaN(possibleNumber);
 
 describe('basic database interaction', () => {
-  
   test('connects to database successfully', done => {
     dbc.query('select 1 + 1 as solution', (err, results) => {
       if (err) {
@@ -30,7 +29,9 @@ describe('basic database interaction', () => {
       done();
     });
   });
+});
 
+describe('insert function', () => {
   test('inserts a record and returns its id', done => {
     insert('a code sample', 'someauthor', 'some title',  id => {
       expect(isNumeric(id)).toBe(true);
@@ -41,13 +42,32 @@ describe('basic database interaction', () => {
   test('inserted record can be found by its id', done => {
     insert('some code sample', 'someauthor', 'some title', id => {
       dbc.query('select * from code_samples where id = ?', [id], (err, results) => {
-        let { code, author } = results[0];
+        const { code, author } = results[0];
         expect(code).toBe('some code sample');
         expect(author).toBe('someauthor');
         done();
       });
     });
   });
+
+  test('adds a created_at timestamp when inserting', done => {
+    const dateRe = /\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}/;
+
+    insert('timestamp test', 'someauthor', 'some title', id => {
+      // turn off typecasting so we can check the timestamp as a string,
+      // otherwise the mysql library casts it to a JS Date object
+      const queryOptions = {
+        sql: 'select * from code_samples where id = ?',
+        typeCast: false
+      };
+      dbc.query(queryOptions, [id], (err, results) => {
+        const { created_at } = results[0];
+        expect(created_at.toString()).toMatch(dateRe);
+        done();
+      });
+    });
+  });
+
 });
 
 describe('information from events is extracted and saved to the db', () => {
