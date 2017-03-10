@@ -1,9 +1,10 @@
 const bot = require('./src/createBot');
 const dbc = require('./src/dbc');
 const { shouldIgnoreEvent, containsCode, save } = require('./src/eventUtils.js');
+const { getMySQLTimestamp } = require('./src/util');
 
 bot.on('start', () => {
-  console.log('Bot started!');
+  console.log(`${getMySQLTimestamp()} - Bot started!`);
 });
 
 bot.on('message', event => {
@@ -11,7 +12,7 @@ bot.on('message', event => {
     return;
   } else if (containsCode(event)) {
     save(event, id => {
-      console.log(`inserted code sample # ${id}!`);
+      console.log(`${getMySQLTimestamp()} - inserted code sample # ${id}!`);
     });
   }
 });
@@ -29,7 +30,7 @@ const PING_TIME = ( // every hour
 setInterval(() => {
   dbc.ping(err => {
     if (err) throw err;
-    console.log('Server responded to ping');
+    console.log(`${getMySQLTimestamp()} - mysql server responded to ping`);
   });
 }, PING_TIME);
 
